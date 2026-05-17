@@ -1,0 +1,103 @@
+<mat-toolbar class="toolbar mat-elevation-z3">
+  <button mat-icon-button (click)="onMenuToggle($event)">
+  <mat-icon>{{ toggleIcon }}</mat-icon>
+</button>
+
+  <span class="brand-name">Warehouse</span>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        #searchInput
+        [formControl]="searchControl"
+        [matAutocomplete]="auto"
+        (focus)="initSearch()"
+        placeholder="Search [ctrl+space]"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+     <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="onSelect($event)"
+    >
+      @if (!searchControl.value) {
+        <mat-option disabled class="section-label">
+          <mat-icon class="section-icon">history</mat-icon>
+          <span>Last Visited</span>
+        </mat-option>
+      }
+ 
+      @for (menu of filteredMenus; track menu.path) {
+        <mat-option [value]="menu" class="menu-option">
+          <div class="option-row">
+            <div class="option-left">
+              <div class="option-icon-wrap">
+                <mat-icon>{{ menu.icon || 'arrow_right' }}</mat-icon>
+              </div>
+              <span class="option-label">{{ menu.name }}</span>
+            </div>
+            <mat-icon
+              class="open-new-icon"
+              (click)="onSelectNewWin($event, menu)"
+              matTooltip="Open in new tab"
+            >open_in_new</mat-icon>
+          </div>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </div>
+
+  <span class="toolbar-spacer"></span>
+
+  <span class="notification">
+    <button mat-icon-button class="topbar-utility-btn">
+      <mat-icon fontSet="material-icons-outlined"
+      [ngClass]="{ 'shake': notifications.length > 0 }">{{notificationIcon}}</mat-icon>
+    </button>
+  </span>
+
+  <!-- <button mat-icon-button class="topbar-utility-btn">
+    <mat-icon fontSet="material-icons-outlined"
+              [ngClass]="{ 'shake': hasNewNotification }">
+      {{ notifications.length > 0 ? 'notifications_active' : 'notifications' }}
+    </mat-icon>
+
+    @if (notifications.length > 0) {
+      <span class="badge">{{ notifications.length }}</span>
+    }
+  </button> -->
+
+  <span class="mobile-info">
+    <button mat-icon-button class="topbar-utility-btn">
+      <mat-icon>stay_current_portrait</mat-icon>
+    </button>
+  </span>
+
+  <span class="user-info">
+    <span class="user-name">{{userProfileName}}</span>
+    <button mat-icon-button class="topbar-utility-btn">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    [opened]="!collapsed()"
+    mode="over"
+    class="sidenav"
+    (closedStart)="collapsed.set(true)"
+  >
+    <app-custom-sidenav [collapsed]="collapsed()" (menuSelected)="collapsed.set(true)" />
+  </mat-sidenav>
+
+  <mat-sidenav-content
+    class="main-content"
+  >
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

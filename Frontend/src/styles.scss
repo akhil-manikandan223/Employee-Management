@@ -1,0 +1,196 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+$compact-form-field-theme: mat.define-theme(
+  (
+    color: (
+      use-system-variables: true,
+    ),
+    density: (
+      scale: -5,
+    ),
+  )
+);
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+  @include mat.form-field-theme($compact-form-field-theme);
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* You can add global styles to this file, and also import other style files */
+
+.mat-drawer-inner-container {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+}
+
+// styles.scss
+.mat-drawer {
+  border-radius: 0 !important;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-drawer-content {
+  transition: margin 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-drawer-container {
+  background-color: transparent !important;
+}
+
+.mat-drawer-backdrop {
+  display: none;
+}
+
+// styles.scss
+.menu-option {
+  .open-new-icon {
+    opacity: 0;
+    transition: opacity 150ms ease;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  &:hover .open-new-icon {
+    opacity: 1;
+  }
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.option-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// styles.scss
+
+.mat-mdc-autocomplete-panel {
+  padding: 0 !important;
+  border-radius: 8px !important;
+  border: 0.5px solid #e2e8f0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+
+  // Section label (Last Visited / search results header)
+  .section-label {
+    padding: 8px 12px 4px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #6b7280 !important;
+    letter-spacing: 0.6px !important;
+    text-transform: uppercase !important;
+    cursor: default !important;
+    min-height: unset !important;
+    border-bottom: 0.5px solid #f1f5f9;
+  }
+
+  // Each menu option
+  .menu-option {
+    padding: 0 !important;
+    min-height: unset !important;
+    border-radius: 0 !important;
+
+    &:hover, &.mat-mdc-option-active {
+      background: #f8faff !important;
+    }
+
+    .mdc-list-item__primary-text {
+      width: 100%;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 8px 12px;
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-icon-wrap {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      mat-icon {
+        font-size: 15px !important;
+        width: 15px !important;
+        height: 15px !important;
+        color: #6b7280;
+      }
+    }
+
+    .option-label {
+      font-size: 13px;
+      color: #111827;
+    }
+
+    .open-new-icon {
+      font-size: 14px !important;
+      width: 14px !important;
+      height: 14px !important;
+      color: #9ca3af;
+      opacity: 0;
+      transition: opacity 150ms ease;
+      cursor: pointer;
+      flex-shrink: 0;
+
+      &:hover {
+        color: #1976d2;
+      }
+    }
+
+    &:hover .open-new-icon {
+      opacity: 1;
+    }
+  }
+}

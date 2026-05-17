@@ -1,0 +1,41 @@
+<div class="sidenav-inner">
+  <nav class="nav-list">
+    @for (group of menuGroups; track group.title; let last = $last) {
+
+      <!-- Section Title -->
+      @if (!collapsed()) {
+        <div class="nav-section-title">
+          {{ group.title }}
+        </div>
+      }
+
+      <!-- Items -->
+      @for (item of group.items; track item.label) {
+        <a
+          class="nav-item"
+          mat-list-item
+          [routerLink]="item.route"
+          #rla="routerLinkActive"
+          routerLinkActive="active"
+          [matTooltip]="collapsed() ? item.label : ''"
+          matTooltipPosition="right"
+          (click)="onNavItemClick()"
+        >
+          <mat-icon
+            class="nav-icon"
+            [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'">
+            {{ item.icon }}
+          </mat-icon>
+
+          @if (!collapsed()) {
+            <span class="nav-label">{{ item.label }}</span>
+          }
+        </a>
+      }
+
+       @if (!last) {
+          <div class="nav-divider"></div>
+       }
+    }
+  </nav>
+</div>
